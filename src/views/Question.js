@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { List, Comment, Icon, Card } from 'antd';
-import MD from 'react-markdown';
+import { List, Comment, Icon, Card, Collapse } from 'antd';
+import Star from './components/Star';
 
 export default class Question extends Component {
   
@@ -9,6 +9,7 @@ export default class Question extends Component {
     loading: false,
     pagination: {
       current: 1,
+      pageSize: 30,
       total: 0,
     }
   }
@@ -25,6 +26,7 @@ export default class Question extends Component {
         loading: false,
         pagination: {
           current: data.pageNo,
+          pageSize: 25,
           total: data.totalCount,
         }
       });
@@ -37,7 +39,7 @@ export default class Question extends Component {
         current: page,
       }
     });
-    this.fetchData(page);
+    // this.fetchData(page);
   }
 
   render() {
@@ -56,16 +58,27 @@ export default class Question extends Component {
           loading={loading}
           renderItem={
             item => (
-              <li style={{marginTop: 20}}>
-                {
-                  <Card
-                    title={<a style={{color: '#000'}} target="_blank" href={item.question_url}>{item.question}</a>}
-                    extra={<span style={{color: '#ddd'}}>{item.update_time}</span>}
-                    style={{margin: '0 30px 10px 30px'}}
+              <li>
+                <Collapse bordered={false}>
+                  <Collapse.Panel
+                    header={<><span>{item.question}</span></>}
+                    extra={
+                      <>
+                        <span style={{color: '#ddd', marginRight: 30}}>{item.update_time}</span>
+                        <Star title={item.question} content={item.content} url={item.question_url} id={item.unique} />
+                      </>
+                    }
                   >
-                    <div dangerouslySetInnerHTML={{__html: item.content}}></div>
-                  </Card>
-                }
+                    {
+                      <Card>
+                        <p
+                          style={{paddingBottom: 12}}
+                        ><a style={{color: '#1890ff', fontSize: '18px'}} target="_blank" href={item.question_url}>{item.question}</a></p>
+                        <div dangerouslySetInnerHTML={{__html: item.content}}></div>
+                      </Card>
+                    }
+                  </Collapse.Panel>
+                </Collapse>
               </li>
             )
           }

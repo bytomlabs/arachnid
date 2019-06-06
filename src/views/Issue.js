@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { List, Comment, Icon, Card, Pagination } from 'antd';
+import { List, Comment, Icon, Card, Pagination, Collapse } from 'antd';
 import MD from 'react-markdown';
+import Star from './components/Star';
+import moment from 'moment';
 
 export default class Issue extends Component {
   
@@ -26,6 +28,7 @@ export default class Issue extends Component {
         pagination: {
           current: data.pageNo,
           total: data.totalCount,
+          pageSize: 25,
         }
       });
     }).catch(err => console.log(err));
@@ -37,7 +40,7 @@ export default class Issue extends Component {
         current: page,
       }
     });
-    this.fetchData(page);
+    // this.fetchData(page);
   }
 
   render() {
@@ -56,23 +59,37 @@ export default class Issue extends Component {
           loading={loading}
           renderItem={
             item => (
-              <li style={{marginTop: 20}}>
-                <Comment
-                  author={item.owner}
-                  content={<a href={item.url} target="_blank" style={{fontSize: 14, color: '#000'}}>{item.title}</a>}
-                  datetime={item.timestamp}
-                  avatar={<Icon style={{fontSize: 20, paddingTop: 3}} type="github" />}
-                />
-                {
-                  (item.comments || []).map((comment, index) => (
-                    <Card
-                      style={{margin: '0 30px 10px 30px'}}
-                      key={index}
-                    >
-                      <MD source={comment} />
+              <li>
+                <Collapse bordered={false}>
+                  <Collapse.Panel
+                    header={<><span>{item.title}</span></>}
+                    extra={
+                      <>
+                        <span style={{color: '#ddd', marginRight: 30}}>{moment(item.timestamp, 'X').format('YYYY-MM-DD HH:mm:ss')}</span>
+                        <Star title={item.title} url={item.url} id={item.unique} />
+                      </>
+                    }
+                  >
+                    <Card>
+                      <Comment
+                        author={item.owner}
+                        content={<a href={item.url} target="_blank" style={{fontSize: 14, color: '#000'}}>{item.title}</a>}
+                        datetime={item.timestamp}
+                        avatar={<Icon style={{fontSize: 20, paddingTop: 3}} type="github" />}
+                      />
+                      {
+                        (item.comments || []).map((comment, index) => (
+                          <Card
+                            style={{margin: '0 30px 10px 30px'}}
+                            key={index}
+                          >
+                            <MD source={comment} />
+                          </Card>
+                        ))
+                      }
                     </Card>
-                  ))
-                }
+                  </Collapse.Panel>
+                </Collapse>
               </li>
             )
           }

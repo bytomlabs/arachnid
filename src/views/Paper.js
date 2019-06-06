@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { List, Comment, Icon, Card } from 'antd';
-import MD from 'react-markdown';
+import { List, Collapse, Icon, Card } from 'antd';
+import Star from './components/Star';
 
 export default class Paper extends Component {
   
@@ -26,6 +26,7 @@ export default class Paper extends Component {
         pagination: {
           current: data.pageNo,
           total: data.totalCount,
+          pageSize: 25,
         }
       });
     }).catch(err => console.log(err));
@@ -49,23 +50,34 @@ export default class Paper extends Component {
     return (
       <>
         <List
-          header={<span>Stack Exchange</span>}
+          header={<span>Paper</span>}
           itemLayout="horizontal"
           dataSource={list}
           pagination={PagePagination}
           loading={loading}
           renderItem={
             item => (
-              <li style={{marginTop: 20}}>
-                {
-                  <Card
-                    title={<a style={{color: '#000'}} target="_blank" href={item.url}>{item.title}</a>}
-                    extra={<span style={{color: '#ddd'}}>{item.date}</span>}
-                    style={{margin: '0 30px 10px 30px'}}
+              <li>
+                <Collapse bordered={false}>
+                  <Collapse.Panel
+                    header={<><span>{item.title}</span></>}
+                    extra={
+                      <>
+                        <span style={{color: '#ddd', marginRight: 30}}>{item.date}</span>
+                        <Star title={item.title} content={item.abstract} url={item.url} id={item.unique} />
+                      </>
+                    }
                   >
-                    <div dangerouslySetInnerHTML={{__html: item.abstract}}></div>
-                  </Card>
-                }
+                    {
+                      <Card>
+                        <p
+                          style={{paddingBottom: 12}}
+                        ><a style={{color: '#1890ff', fontSize: '18px'}} target="_blank" href={item.url}>{item.title}</a></p>
+                        <div dangerouslySetInnerHTML={{__html: item.abstract}}></div>
+                      </Card>
+                    }
+                  </Collapse.Panel>
+                </Collapse>
               </li>
             )
           }

@@ -6,6 +6,7 @@ import BitcoinDev from './BitcoinDev';
 import Question from './Question';
 import Issue from './Issue';
 import Paper from './Paper';
+import Favorites from './Favorites';
 
 const { Header, Content, Sider } = Layout;
 
@@ -15,7 +16,6 @@ class Home extends React.Component {
   render() {
 
     const defaultKey = this.props.location.pathname === '/' ? '/issue' : this.props.location.pathname;
-    console.log(defaultKey)
 
     return (
       <Layout>
@@ -27,24 +27,28 @@ class Home extends React.Component {
             left: 0,
           }}
         >
-          <div style={{padding: '15px 30px 0 15px'}}>
+          <div style={{padding: '15px 30px 10px 15px'}}>
           <h1 style={{color: '#fff',fontWeight: '300',fontSize: 22,textAlign: 'center', background: 'rgba(255, 255, 255, 0.2)',}}>Bitcore</h1>
           </div>
           <Menu theme="dark" mode="inline" selectedKeys={[defaultKey]} defaultSelectedKeys={['/issue']}>
-            <Menu.Item key="/issue">
-              <Link to="/issue"><Icon type="exclamation-circle" />Github Issue</Link>
+            <Menu.Item key="/bitcore/issue">
+              <Link to="/bitcore/issue"><Icon type="exclamation-circle" />Github Issue</Link>
             </Menu.Item>
-            <Menu.Item key="/meeting">
-              <Link to="/meeting"><Icon type="team" />Meeting</Link>
+            <Menu.Item key="/bitcore/meeting">
+              <Link to="/bitcore/meeting"><Icon type="team" />Meeting</Link>
             </Menu.Item>
-            <Menu.Item key="/bitcoin">
-              <Link to="/bitcoin"><Icon type="code" />Dev (Maillist)</Link>
+            <Menu.Item key="/bitcore/bitcoin">
+              <Link to="/bitcore/bitcoin"><Icon type="code" />Dev (Maillist)</Link>
             </Menu.Item>
-            <Menu.Item key="/question">
-              <Link to="/question"><Icon type="question-circle" />Stack Exchange</Link>
+            <Menu.Item key="/bitcore/question">
+              <Link to="/bitcore/question"><Icon type="question-circle" />Stack Exchange</Link>
             </Menu.Item>
-            <Menu.Item key="/paper">
-              <Link to="/paper"><Icon type="question-circle" />Paper</Link>
+            <Menu.Item key="/bitcore/paper">
+              <Link to="/bitcore/paper"><Icon type="file-word" />Paper</Link>
+            </Menu.Item>
+            <Menu.Divider />
+            <Menu.Item key="/bitcore/star">
+              <Link to="/bitcore/star"><Icon type="star" />Favorites</Link>
             </Menu.Item>
           </Menu>
         </Sider>
@@ -61,12 +65,13 @@ class Home extends React.Component {
             }}
           >
             <Switch>
-              <Route exact path="/meeting" render={(props) => <Metting {...props} />} />
-              <Route exact path="/bitcoin" render={(props) => <BitcoinDev {...props} />} />
-              <Route exact path="/question" render={(props) => <Question {...props} />} />
-              <Route exact path="/issue" render={(props) => <Issue {...props} />} />
-              <Route exact path="/paper" render={(props) => <Paper {...props} />} />
-              <Redirect to="/issue" />
+              <Route exact path="/bitcore/meeting" render={(props) => <Metting {...props} />} />
+              <Route exact path="/bitcore/bitcoin" render={(props) => <BitcoinDev {...props} />} />
+              <Route exact path="/bitcore/question" render={(props) => <Question {...props} />} />
+              <Route exact path="/bitcore/issue" render={(props) => <Issue {...props} />} />
+              <Route exact path="/bitcore/paper" render={(props) => <Paper {...props} />} />
+              <Route exact path="/bitcore/star" render={(props) => <Favorites {...props} />} />
+              <Redirect to="/bitcore/issue" />
             </Switch>
           </Content>
         </Layout>
