@@ -84,7 +84,7 @@ export default class News extends Component {
       },
       {
         title: '链接',
-        dataIndex: 'new_url'
+        dataIndex: 'url'
       },
       {
         title: '操作',

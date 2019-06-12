@@ -21,6 +21,7 @@ class NewsEditor extends Component {
       delete values.type;
       values.time = values.time.format('x');
       values.image = values.image[0].response;
+      values.time = +values.time;
       _ajax.post(`${_conf.config.bystack_api_host}${path}`, values).then(data => {
         console.log(data);
         if(data.status === 'success'){
@@ -49,7 +50,7 @@ class NewsEditor extends Component {
     const { handleModalClose } = this.props;
     const nodes = [
       {field: 'title', label: '文章标题', placeholder: '请输入文章标题', message: '请输入标题'},
-      {field: 'new_url', label: '跳转链接', placeholder: '请输入跳转链接', message: '请输入链接'},
+      {field: 'url', label: '跳转链接', placeholder: '请输入跳转链接', message: '请输入链接'},
     ];
     return (
       <>
