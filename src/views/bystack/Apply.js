@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Table, Collapse, Icon, Card } from 'antd';
 
 
-const apiPath = 'https://kit.blockmeta.com/supernode/v1/list/supernode';
+const apiPath = `${_conf.config.bystack_api_host}/list/supernode`;
 
 
 export default class Apply extends Component {
@@ -37,7 +37,7 @@ export default class Apply extends Component {
         render: (text, item) => <img src={item.logo} width="50" alt=""/>
       },
       {
-        title: '姓名',
+        title: '名称/姓名',
         width: 120,
         fixed: 'left',
         dataIndex: 'name'
@@ -94,6 +94,7 @@ export default class Apply extends Component {
           dataSource={list} 
           columns={columns} 
           scroll={{ x: 5000 }}
+          rowKey={(item, index) => index}
         />
       </>
     )
