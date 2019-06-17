@@ -26,8 +26,9 @@ export default class News extends Component {
       news_zh = [];
     }
     try {
-      const data = news_en = await _ajax.get(`${_conf.config.bystack_api_host}/news/english`);
-      news_en = [...data.data];
+      const data = await _ajax.get(`${_conf.config.bystack_api_host}/news/english`);
+      const list = data.data.map(item => ({...item, lang: 'en'}));
+      news_en = [...list];
     } catch (error) {
       news_en = [];
     }
@@ -38,14 +39,15 @@ export default class News extends Component {
     });
   }
 
-  handleDel = (id) => {
+  handleDel = (id, lang = 'zh') => {
     const _this = this;
     Modal.confirm({
       title: '确定删除吗？',
       content: '删除后将不可恢复',
       onOk() {
-        console.log('delete.');
-        _ajax.post(`${_conf.config.bystack_api_host}/news/del`, { uuid: id }).then(data => {
+        console.log('delete.', lang);
+        const path = lang === 'en' ? '/news/english/del' : '/news/del';
+        _ajax.post(`${_conf.config.bystack_api_host}${path}`, { uuid: id }).then(data => {
           if(data.status === 'success'){
             message.success('删除成功');
             _this.fetchData();
@@ -93,7 +95,7 @@ export default class News extends Component {
         render: (text, item) => (
           <>
             <a style={{color: '#1890ff', margin: 5}} onClick={() => this.handleEdit(item.uuid)}>编辑</a>
-            <a style={{color: '#1890ff', margin: 5}} onClick={() => this.handleDel(item.uuid)}>删除</a>
+            <a style={{color: '#1890ff', margin: 5}} onClick={() => this.handleDel(item.uuid, item.lang)}>删除</a>
           </>
         )
       },

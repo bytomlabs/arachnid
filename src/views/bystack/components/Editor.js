@@ -72,7 +72,7 @@ class Editor extends Component {
               </Form.Item>
             ))
           }
-          <Form.Item label="Logo"  {...layout} extra="jpg、jpeg、png，大小不超过200KB">
+          <Form.Item label="Logo"  {...layout} extra="支持jpg、jpeg、png，尺寸512*512，大小不超过500KB">
             {getFieldDecorator('logo', {
               rules: [{required: true, message: '请上传logo'}],
               valuePropName: 'fileList',
