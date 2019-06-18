@@ -10,7 +10,7 @@ class Editor extends Component {
   componentDidMount() {
     console.log(this.props.data)
     const { form, data } = this.props;
-    form.setFieldsValue(data)
+    form.setFieldsValue(data);
   }
 
   handleSubmit = (e) => {
@@ -22,7 +22,12 @@ class Editor extends Component {
       if(err) {
         return;
       }
-      values.reserved_1 = values.logo[0].response;
+      if(!values.logo){
+        values.reserved_1 = data.reserved_1;
+      } else {
+        values.reserved_1 = values.logo[0].response;
+      }
+      console.log(values)
       delete values.logo;
       if(data){
         values.uuid = data.uuid;
@@ -48,7 +53,8 @@ class Editor extends Component {
 
   render() {
     const { getFieldDecorator, } = this.props.form;
-    const { handleModalClose } = this.props;
+    const { handleModalClose, data } = this.props;
+    const isEdit = !!data;
     const nodes = [
       {field: 'name', label: '名称/姓名', placeholder: '', message: '请输入姓名'},
       {field: 'name_en', label: '名称/姓名 En', placeholder: '', message: '请输入姓名'},
@@ -83,7 +89,7 @@ class Editor extends Component {
           }
           <Form.Item label="Logo"  {...layout} extra="支持jpg、jpeg、png，尺寸512*512，大小不超过500KB">
             {getFieldDecorator('logo', {
-              rules: [{required: true, message: '请上传logo'}],
+              rules: [{required: !isEdit, message: '请上传logo'}],
               valuePropName: 'fileList',
               getValueFromEvent: this.normFile,
             })(
