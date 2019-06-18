@@ -7,10 +7,16 @@ const layout = {
 
 class Editor extends Component {
 
+  componentDidMount() {
+    console.log(this.props.data)
+    const { form, data } = this.props;
+    form.setFieldsValue(data)
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
     const { validateFields } = this.props.form;
-    const { handleModalClose } = this.props;
+    const { handleModalClose, data } = this.props;
     validateFields((err, values) => {
       console.log(err, values);
       if(err) {
@@ -18,6 +24,9 @@ class Editor extends Component {
       }
       values.reserved_1 = values.logo[0].response;
       delete values.logo;
+      if(data){
+        values.uuid = data.uuid;
+      }
       _ajax.post(`${_conf.config.bystack_api_host}/sn-table`, values).then(data => {
         console.log(data);
         if(data.status === 'success'){

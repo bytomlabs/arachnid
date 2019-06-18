@@ -6,6 +6,7 @@ export default class SuperNode extends Component {
   
   state = {
     list: [],
+    data: '',   // 编辑数据
     editorVisible: false,
     loading: false,
   }
@@ -43,15 +44,23 @@ export default class SuperNode extends Component {
     })
   }
 
+  handleEdit = (data) => {
+    this.setState({
+      editorVisible: true,
+      data,
+    });
+  }
+
   handleModalClose = () => {
     this.setState({
       editorVisible: false,
+      data: '',
     });
     this.fetchData();
   }
 
   render() {
-    const { list, loading, editorVisible } = this.state;
+    const { list, data, loading, editorVisible } = this.state;
     const columns = [
       {
         title: 'LOGO',
@@ -73,7 +82,7 @@ export default class SuperNode extends Component {
         fixed: 'left',
         render: (text, item) => (
           <>
-            <a style={{color: '#1890ff', margin: 5}} onClick={() => this.handleEdit(item.uuid)}>编辑</a>
+            <a style={{color: '#1890ff', margin: 5}} onClick={() => this.handleEdit(item)}>编辑</a>
             <a style={{color: '#1890ff', margin: 5}} onClick={() => this.handleDel(item.uuid)}>删除</a>
           </>
         )
@@ -123,13 +132,14 @@ export default class SuperNode extends Component {
           <Button onClick={() => this.setState({editorVisible: true})} type="primary">新增</Button>
         </PageHeader>
         <Modal
+          destroyOnClose
           visible={editorVisible}
-          onCancel={() => this.setState({editorVisible: false})}
+          onCancel={() => this.setState({editorVisible: false, data: ''})}
           onOk={this.handleSubmit}
           width={900}
           title="共识节点新增/编辑"
           footer={null}
-        ><Editor handleModalClose={this.handleModalClose} /></Modal>
+        ><Editor data={data} handleModalClose={this.handleModalClose} /></Modal>
         <Table
           dataSource={list} 
           columns={columns} 
