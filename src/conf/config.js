@@ -12,7 +12,7 @@ const config = {
     },
     links: {},
   },
-  bystack_api_host: 'https://kit.blockmeta.com/supernode/v1',
+  bystack_api_host: `${window.env.apiHost}`,
   default_lang: 'zh-cn',
 };
 
