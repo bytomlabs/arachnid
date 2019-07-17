@@ -36,7 +36,6 @@ class App extends PureComponent {
         <div>
           <BrowserRouter>
             <Switch>
-              <Route path="/bystack" render={(props) => <Bystack {...props} />} />
               <Route path="/bitcore" render={(props) => <Home {...props} />} />
               <Redirect to="/bitcore" />
             </Switch>
