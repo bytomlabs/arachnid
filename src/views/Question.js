@@ -34,11 +34,11 @@ export default class Question extends Component {
   }
 
   handlePageChange = (page) => {
-    this.setState({
-      pagination: {
-        current: page,
-      }
-    });
+    // this.setState({
+    //   pagination: {
+    //     current: page,
+    //   }
+    // });
     this.fetchData(page);
   }
 

@@ -33,11 +33,11 @@ export default class Paper extends Component {
   }
 
   handlePageChange = (page) => {
-    this.setState({
-      pagination: {
-        current: page,
-      }
-    });
+    // this.setState({
+    //   pagination: {
+    //     current: page,
+    //   }
+    // });
     this.fetchData(page);
   }
 

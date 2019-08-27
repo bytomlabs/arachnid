@@ -35,11 +35,11 @@ export default class Issue extends Component {
   }
 
   handlePageChange = (page) => {
-    this.setState({
-      pagination: {
-        current: page,
-      }
-    });
+    // this.setState({
+    //   pagination: {
+    //     current: page,
+    //   }
+    // });
     this.fetchData(page);
   }
 

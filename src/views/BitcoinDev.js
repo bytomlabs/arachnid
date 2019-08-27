@@ -33,11 +33,11 @@ export default class BitcoinDev extends Component {
   }
 
   handlePageChange = (page) => {
-    this.setState({
-      pagination: {
-        current: page,
-      }
-    });
+    // this.setState({
+    //   pagination: {
+    //     current: page,
+    //   }
+    // });
     this.fetchData(page);
   }
 
