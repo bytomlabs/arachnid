@@ -39,7 +39,7 @@ export default class Question extends Component {
         current: page,
       }
     });
-    // this.fetchData(page);
+    this.fetchData(page);
   }
 
   render() {

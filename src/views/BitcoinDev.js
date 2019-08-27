@@ -24,7 +24,7 @@ export default class BitcoinDev extends Component {
         list: data.data,
         loading: false,
         pagination: {
-          // current: data.pageNo,
+          current: data.pageNo,
           total: data.totalCount,
           pageSize: 25,
         }
@@ -38,7 +38,7 @@ export default class BitcoinDev extends Component {
         current: page,
       }
     });
-    // this.fetchData(page);
+    this.fetchData(page);
   }
 
   render() {

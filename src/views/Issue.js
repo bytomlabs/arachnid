@@ -19,9 +19,9 @@ export default class Issue extends Component {
     this.fetchData();
   }
 
-  fetchData = (page = 1, size = 25) => {
+  fetchData = (pageNo = 1, pageCount = 25) => {
     this.setState({loading: true});
-    _ajax.get(_conf.get_path('issues'), {params: {page, size}}).then((data) => {
+    _ajax.get(_conf.get_path('issues'), {params: {pageNo, pageCount}}).then((data) => {
       this.setState({
         list: data.data,
         loading: false,
@@ -40,7 +40,7 @@ export default class Issue extends Component {
         current: page,
       }
     });
-    // this.fetchData(page);
+    this.fetchData(page);
   }
 
   render() {
