@@ -1,4 +1,4 @@
-const api_base_url = '//arachnid.8btc-ops.com:8888';
+const api_base_url = 'http://arcapi.bytom.io';
 // const api_base_url = window.env.apiHost;
 const config = {
   path: {
